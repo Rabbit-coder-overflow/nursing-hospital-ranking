@@ -12,14 +12,8 @@ COPY data ./data
 
 RUN npm run build
 
-# Runtime stage: slim Ubuntu image serving static files via nginx-light
-FROM ubuntu:24.04
-
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends nginx-light ca-certificates \
-  && rm -rf /var/lib/apt/lists/*
+# Runtime stage: slim Ubuntu nginx image
+FROM ubuntu/nginx:1.24-24.04_beta
 
 COPY --from=builder /app/dist /var/www/html
 
