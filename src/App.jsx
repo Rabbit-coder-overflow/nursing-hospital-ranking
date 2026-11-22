@@ -20,7 +20,7 @@ export default function App() {
         if (condition.type === 'text') {
           const normalizedQuery = selected.replace(/,/g, '').toLocaleLowerCase()
           const normalizedAttr = String(attr).replace(/,/g, '').toLocaleLowerCase()
-          if (/^\d+$/.test(normalizedQuery)) {
+          if ((condition.compare === 'gte' || condition.compare === 'lte') && /^\d+$/.test(normalizedQuery)) {
             const firstMatch = normalizedAttr.match(/\d+/)
             if (!firstMatch) return false
             const attrNumber = Number(firstMatch[0])
