@@ -1,6 +1,49 @@
 {
   "conditions": [
     {
+      "id": "region",
+      "label": "院所縣市",
+      "options": [
+        { "value": "north", "label": "北部" },
+        { "value": "central", "label": "中部" },
+        { "value": "south", "label": "南部" },
+        { "value": "east", "label": "東部" }
+      ]
+    },
+    {
+      "id": "hospital_type",
+      "label": "院所性質",
+      "options": [
+        { "value": "medical_center", "label": "醫學中心" },
+        { "value": "regional", "label": "區域醫院" },
+        { "value": "cancer_specialty", "label": "癌症專科醫院" },
+        { "value": "psychiatric_specialty", "label": "精神科專科醫院" }
+      ]
+    },
+    {
+      "id": "special_unit",
+      "label": "特殊工作單位",
+      "options": [
+        { "value": "emergency", "label": "急症" },
+        { "value": "icu", "label": "重症" },
+        { "value": "operating_room", "label": "開刀房" }
+      ]
+    },
+    {
+      "id": "dormitory",
+      "label": "宿舍",
+      "options": [
+        { "value": "needed", "label": "需要" }
+      ]
+    },
+    {
+      "id": "new_grad_grant",
+      "label": "新人獎助學金",
+      "options": [
+        { "value": "needed", "label": "需要" }
+      ]
+    },
+    {
       "id": "shift",
       "label": "輪班方式",
       "options": [
@@ -9,37 +52,60 @@
       ]
     },
     {
-      "id": "overtime",
-      "label": "加班情況",
+      "id": "leave",
+      "label": "排班彈性",
       "options": [
-        { "value": "rare", "label": "較少加班" },
-        { "value": "sometimes", "label": "偶爾加班" }
+        { "value": "fixed", "label": "固定班別" },
+        { "value": "sequential", "label": "依序排班" }
       ]
     },
     {
-      "id": "leave",
-      "label": "排假彈性",
-      "options": [
-        { "value": "flexible", "label": "較有彈性" },
-        { "value": "scheduled", "label": "依排班安排" }
-      ]
+      "id": "salary",
+      "label": "薪資",
+      "type": "text",
+      "placeholder": "例如：45000 或 48,000"
     }
   ],
   "hospitals": [
     {
       "name": "範例醫院 A",
       "city": "台北市",
-      "attributes": { "shift": "fixed", "overtime": "rare", "leave": "flexible" }
+      "attributes": {
+        "region": "north",
+        "hospital_type": "medical_center",
+        "special_unit": "icu",
+        "dormitory": "needed",
+        "new_grad_grant": "needed",
+        "shift": "fixed",
+        "leave": "fixed",
+        "salary": "月薪 48,000 元"
+      }
     },
     {
       "name": "範例醫院 B",
       "city": "台中市",
-      "attributes": { "shift": "rotating", "overtime": "sometimes", "leave": "scheduled" }
+      "attributes": {
+        "region": "central",
+        "hospital_type": "regional",
+        "special_unit": "emergency",
+        "dormitory": "needed",
+        "shift": "rotating",
+        "leave": "sequential",
+        "salary": "月薪 45,000 元"
+      }
     },
     {
       "name": "範例醫院 C",
       "city": "高雄市",
-      "attributes": { "shift": "rotating", "overtime": "rare", "leave": "flexible" }
+      "attributes": {
+        "region": "south",
+        "hospital_type": "cancer_specialty",
+        "special_unit": "operating_room",
+        "new_grad_grant": "needed",
+        "shift": "rotating",
+        "leave": "fixed",
+        "salary": "月薪 50,000 元"
+      }
     }
   ]
 }
