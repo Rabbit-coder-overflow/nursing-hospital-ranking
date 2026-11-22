@@ -24,6 +24,13 @@ test('searches and combines configurable filters, then resets them', async ({ pa
   await expect(page.getByLabel('學業成績')).toHaveValue('')
   await expect(page.getByLabel('實習成績')).toHaveValue('')
 
+  await page.getByLabel('其他').fill('交班')
+  await expect(page.getByText('找到 1 間院所')).toBeVisible()
+  await expect(page.getByRole('heading', { name: '三軍總醫院' })).toBeVisible()
+
+  await page.getByRole('button', { name: '清除全部' }).click()
+  await expect(page.getByLabel('其他')).toHaveValue('')
+
   await page.getByLabel('排班彈性').selectOption('fixed')
   await expect(page.getByText('找到 2 間院所')).toBeVisible()
   await page.getByLabel('宿舍').selectOption('needed')
