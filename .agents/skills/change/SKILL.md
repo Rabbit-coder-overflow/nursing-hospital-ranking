@@ -42,9 +42,9 @@ Use this skill whenever the user invokes `/change` (or asks to make a change usi
 ### Step 2: Implement on a Non-`main` Branch & Open a PR
 1. **Confirm you are on a non-`main` branch based on latest `main`:**
    - Ensure the current branch is **not** `main` (e.g. `change/<short-description>` or the synced non-`main` working branch).
-2. **Implement & Verify:**
+2. **Implement & Verify (Tests Must Pass Locally Before Step 3):**
    - Make the minimal, clean changes needed, following `AGENTS.md` guidelines (including Traditional Chinese for all displayed UI text).
-   - Run relevant checks such as `npm run build` and `npm run test:e2e`.
+   - Run local build and tests (`npm run build` and `npm run test:e2e`) and **ensure all tests pass locally** before opening/presenting the PR and moving onto Step 3.
    - If the user asks for a preview or how the feature looks right now, capture a screenshot of the webapp showing the relevant feature (using Playwright against the local preview server) and share it with the user.
 3. **Commit, Push, and Open a PR:**
    - Commit the changes with a clear commit message.
@@ -61,13 +61,16 @@ Use this skill whenever the user invokes `/change` (or asks to make a change usi
 ### Step 3: Handle Review Feedback, Push to Non-`main` Branch & Guide the User to Merge
 1. Wait for the user to review the PR.
 2. **If the user denies the change or requests modifications:**
-   - Restart from **Step 2** (clarifying any unclear feedback first), apply the requested changes on the same non-`main` PR branch, re-verify (and re-capture a screenshot if preview was requested), commit and push the updates to the PR, and present the updated PR/diff links for review again.
+   - Restart from **Step 2** (clarifying any unclear feedback first), apply the requested changes on the same non-`main` PR branch, re-verify that all tests pass locally (and re-capture a screenshot if preview was requested), commit and push the updates to the PR, and present the updated PR/diff links for review again.
 3. **Once the user acknowledges/approves the change:**
    - **Ensure all changes are pushed to the non-`main` branch on GitHub:** verify there are no uncommitted or unpushed local changes, and push to the non-`main` branch (`git push -u origin <branch-name>`) so the PR on GitHub contains the exact approved state ready to merge.
    - **Do NOT merge the PR.** Even if the user says "please merge it for me", politely explain that you cannot merge PRs on their behalf and that they should complete the merge themselves.
-   - Provide clear, step-by-step instructions (in the locked conversation language) for merging on GitHub:
-     1. Open the Pull Request link you provided.
+   - Provide clear, step-by-step instructions (in the locked conversation language) **including the clickable link to the PR** for merging on GitHub:
+     1. Open the Pull Request link: `<PR_URL>`.
      2. Scroll down to the merge box at the bottom of the page.
      3. Click the green **"Merge pull request"** button (or **"Squash and merge"** if preferred).
      4. Click **"Confirm merge"** to finish applying the change to `main`.
      5. Optionally mention that they can click **"Delete branch"** afterward to keep the repository tidy.
+   - **Post-merge reminder & screenshot offer:**
+     - Remind the user that GitHub Pages' CDN can be slow to update after merging, so it may take a little while for the change to show up on the live site.
+     - Offer the option to provide a screenshot demonstrating the change (if they want to see how it looks without waiting for the CDN).
