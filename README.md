@@ -28,7 +28,7 @@ npm run test:e2e
 
 ## Configure the data
 
-Edit `data/hospitals.json`. Each item in `conditions` has a unique `id`, a display `label`, and `options` with unique `value` and display `label` pairs. Each hospital has a `name`, `city`, and an `attributes` object mapping condition IDs to option values. Add or remove conditions and options there to change both the filters and the details displayed on each card. An absent or unrecognized attribute is displayed as 未提供 and does not match a selected option. Search matches hospital name or city; selected filters are combined with AND.
+Edit `data/hospitals.json`. Each item in `conditions` has a unique `id`, a display `label`, and either `options` (with unique `value` and display `label` pairs) for dropdown filters or `"type": "text"` (with an optional `placeholder`) for open-ended text filters. Each hospital has a `name`, `city`, and an `attributes` object mapping condition IDs to option values or text values. Add or remove conditions and options there to change both the filters and the details displayed on each card. An absent or unrecognized attribute is displayed as 未提供 and does not match a selected option. Search matches hospital name or city; selected filters are combined with AND.
 
 Replace the example entries with responsibly sourced, up-to-date information before using the site for real comparisons. Avoid publishing personal or confidential information.
 

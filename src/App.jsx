@@ -13,8 +13,20 @@ export default function App() {
     return data.hospitals.filter((hospital) => {
       const matchesSearch = `${hospital.name} ${hospital.city}`.toLocaleLowerCase().includes(search)
       return matchesSearch && data.conditions.every((condition) => {
-        const selected = filters()[condition.id]
-        return !selected || hospital.attributes[condition.id] === selected
+        const selected = (filters()[condition.id] || '').trim()
+        if (!selected) return true
+        const attr = hospital.attributes[condition.id]
+        if (!attr) return false
+        if (condition.type === 'text') {
+          const normalizedQuery = selected.replace(/,/g, '').toLocaleLowerCase()
+          const normalizedAttr = String(attr).replace(/,/g, '').toLocaleLowerCase()
+          if (/^\d+$/.test(normalizedQuery)) {
+            const attrNumber = Number(normalizedAttr.replace(/[^\d]/g, ''))
+            return Number.isFinite(attrNumber) && attrNumber >= Number(normalizedQuery)
+          }
+          return normalizedAttr.includes(normalizedQuery)
+        }
+        return attr === selected
       })
     })
   })
@@ -64,12 +76,18 @@ export default function App() {
             <For each={data.conditions}>{(condition) => (
               <div class="mt-5">
                 <label for={`filter-${condition.id}`} class="block text-sm font-semibold">{condition.label}</label>
-                <select id={`filter-${condition.id}`} value={filters()[condition.id] || ''}
-                  onChange={(event) => setFilters({ ...filters(), [condition.id]: event.currentTarget.value })}
-                  class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 focus:outline-2 focus:outline-teal-600 dark:border-slate-600 dark:bg-slate-800">
-                  <option value="">不限</option>
-                  <For each={condition.options}>{(option) => <option value={option.value}>{option.label}</option>}</For>
-                </select>
+                <Show when={condition.type === 'text'} fallback={
+                  <select id={`filter-${condition.id}`} value={filters()[condition.id] || ''}
+                    onChange={(event) => setFilters({ ...filters(), [condition.id]: event.currentTarget.value })}
+                    class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 focus:outline-2 focus:outline-teal-600 dark:border-slate-600 dark:bg-slate-800">
+                    <option value="">不限</option>
+                    <For each={condition.options || []}>{(option) => <option value={option.value}>{option.label}</option>}</For>
+                  </select>
+                }>
+                  <input id={`filter-${condition.id}`} type="text" placeholder={condition.placeholder || ''} value={filters()[condition.id] || ''}
+                    onInput={(event) => setFilters({ ...filters(), [condition.id]: event.currentTarget.value })}
+                    class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-2 focus:outline-teal-600 dark:border-slate-600 dark:bg-slate-800" />
+                </Show>
               </div>
             )}</For>
           </aside>
@@ -89,7 +107,11 @@ export default function App() {
                       <For each={data.conditions}>{(condition) => (
                         <div class="flex justify-between gap-3">
                           <dt class="text-slate-600 dark:text-slate-300">{condition.label}</dt>
-                          <dd class="text-right font-medium">{condition.options.find((option) => option.value === hospital.attributes[condition.id])?.label || '未提供'}</dd>
+                          <dd class="text-right font-medium">
+                            {condition.type === 'text'
+                              ? (hospital.attributes[condition.id] || '未提供')
+                              : (condition.options?.find((option) => option.value === hospital.attributes[condition.id])?.label || '未提供')}
+                          </dd>
                         </div>
                       )}</For>
                     </dl>
