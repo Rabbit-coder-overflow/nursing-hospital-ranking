@@ -1,6 +1,6 @@
 # 台灣護理工作環境比較
 
-A static, Traditional Chinese search interface for nursing students comparing work-life-balance conditions. **All included hospitals and attributes are fictional examples**, not a ranking or a source of real employment information. Verify current conditions with hospitals and nurses before making decisions.
+A static, Traditional Chinese search interface for nursing students comparing work-life-balance conditions. Light/dark mode initially follows the device preference and remembers a manual choice on that device. **All included hospitals and attributes are fictional examples**, not a ranking or a source of real employment information. Verify current conditions with hospitals and nurses before making decisions.
 
 ## Run locally
 

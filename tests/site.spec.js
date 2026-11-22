@@ -23,3 +23,17 @@ test('searches and combines configurable filters, then resets them', async ({ pa
   await expect(page.getByRole('heading', { name: '範例醫院 B' })).toBeVisible()
   await expect(page.getByText('找到 1 間院所')).toBeVisible()
 })
+
+test('uses the system theme and remembers a manual choice', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' })
+  await page.goto('./')
+  await expect(page.locator('#root > div')).toHaveClass(/(?:^|\s)dark(?:\s|$)/)
+  const darkBackground = await page.locator('#root > div').evaluate((element) => getComputedStyle(element).backgroundColor)
+  await page.getByRole('button', { name: '切換淺色模式' }).click()
+  await expect(page.locator('#root > div')).not.toHaveClass(/(?:^|\s)dark(?:\s|$)/)
+  await expect(page.locator('#root > div')).not.toHaveCSS('background-color', darkBackground)
+  await page.reload()
+  await expect(page.locator('#root > div')).not.toHaveClass(/(?:^|\s)dark(?:\s|$)/)
+  await page.getByRole('button', { name: '切換深色模式' }).click()
+  await expect(page.locator('#root > div')).toHaveClass(/(?:^|\s)dark(?:\s|$)/)
+})
