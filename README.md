@@ -11,10 +11,17 @@ npm ci
 npm run dev
 ```
 
-To build and test the production site:
+To build the production site without development dependencies:
 
 ```sh
+npm ci --omit=dev
 npm run build
+```
+
+The build tools are production dependencies so this also works with `NODE_ENV=production npm ci`. To test the built site, install development dependencies (including Playwright) separately:
+
+```sh
+npm ci --include=dev
 npx playwright install --with-deps chromium
 npm run test:e2e
 ```
@@ -27,4 +34,4 @@ Replace the example entries with responsibly sourced, up-to-date information bef
 
 ## Deploy to GitHub Pages
 
-In the repository settings, choose **Pages → Build and deployment → GitHub Actions**. The workflow builds and runs the browser tests for pull requests and pushes to `main`, and deploys the built artifact on pushes to `main` or manual runs. The relative asset base also supports project Pages URLs.
+In the repository settings, choose **Pages → Build and deployment → GitHub Actions**. The workflow builds without development dependencies, then installs Playwright and tests the built assets for pull requests and pushes to `main`. It deploys the built artifact on pushes to `main` or manual runs. The relative asset base also supports project Pages URLs.
