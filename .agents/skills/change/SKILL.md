@@ -52,7 +52,7 @@ Use this skill whenever the user invokes `/change` (or asks to make a change usi
      ```bash
      git push -u origin <branch-name>
      ```
-   - Open a Pull Request targeting `main` using `gh pr create --base main --head <branch-name> ...` (or confirm the existing PR is updated).
+   - Open a Pull Request targeting `main` using `gh pr create --base main --head <branch-name> ...` (or if updating an existing PR, verify via `gh pr view --json state,mergeable` that it is still `OPEN`; if it was already `MERGED` or `CLOSED`, restart from **Step 1**—excluding re-asking for user input—by syncing a fresh branch from the latest `origin/main`, carrying over the unmerged changes, and opening a new PR).
 4. **Offer Links & Inspection Guidance:**
    - Share the clickable PR URL and the direct link to view the changed files (e.g. `<PR_URL>/files`).
    - Provide simple, beginner-friendly instructions explaining how to click the link, read the summary, and check the "Files changed" tab (or preview screenshots if included) so a non-technical user can easily inspect the change.
@@ -60,10 +60,13 @@ Use this skill whenever the user invokes `/change` (or asks to make a change usi
 
 ### Step 3: Handle Review Feedback, Push to Non-`main` Branch & Guide the User to Merge
 1. Wait for the user to review the PR.
-2. **If the user denies the change or requests modifications:**
-   - Restart from **Step 2** (clarifying any unclear feedback first), apply the requested changes on the same non-`main` PR branch, re-verify that all tests pass locally (and re-capture a screenshot if preview was requested), commit and push the updates to the PR, and present the updated PR/diff links for review again.
-3. **Once the user acknowledges/approves the change:**
-   - **Ensure all changes are pushed to the non-`main` branch on GitHub:** verify there are no uncommitted or unpushed local changes, and push to the non-`main` branch (`git push -u origin <branch-name>`) so the PR on GitHub contains the exact approved state ready to merge.
+2. **Verify the PR is still `OPEN` and mergeable before every update or handoff:**
+   - Run `gh pr view <PR_URL> --json state,mergeable` (and `git fetch origin`) before returning to the user.
+   - Never return to the user with a `MERGED`, `CLOSED`, or out-of-date PR link. If the previous PR has already been merged or closed, **restart from Step 1** (excluding re-asking for user input): sync a fresh non-`main` branch from the latest `origin/main`, carry over any unmerged changes, proceed through **Step 2** (verify tests pass, push the new branch, and open a new `OPEN` PR targeting `main`), and share the new PR link.
+3. **If the user denies the change or requests modifications:**
+   - Restart from **Step 2** (or **Step 1**, excluding user input, if the previous PR was already merged), apply the requested changes on an `OPEN` non-`main` PR branch, re-verify that all tests pass locally (and re-capture a screenshot if preview was requested), commit and push the updates to the PR, and present the updated PR/diff links for review again.
+4. **Once the user acknowledges/approves the change:**
+   - **Ensure all changes are pushed to an `OPEN`, mergeable non-`main` PR branch on GitHub:** verify there are no uncommitted or unpushed local changes, push to the non-`main` branch (`git push -u origin <branch-name>`), and confirm via `gh pr view <PR_URL> --json state,mergeable` that the PR is `OPEN` and ready to merge.
    - **Do NOT merge the PR.** Even if the user says "please merge it for me", politely explain that you cannot merge PRs on their behalf and that they should complete the merge themselves.
    - Provide clear, step-by-step instructions (in the locked conversation language) **including the clickable link to the PR** for merging on GitHub:
      1. Open the Pull Request link: `<PR_URL>`.

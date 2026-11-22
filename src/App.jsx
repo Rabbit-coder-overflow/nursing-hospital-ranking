@@ -16,17 +16,20 @@ export default function App() {
         const selected = (filters()[condition.id] || '').trim()
         if (!selected) return true
         const attr = hospital.attributes[condition.id]
-        if (!attr) return false
+        if (!attr || (Array.isArray(attr) && attr.length === 0)) return false
         if (condition.type === 'text') {
           const normalizedQuery = selected.replace(/,/g, '').toLocaleLowerCase()
           const normalizedAttr = String(attr).replace(/,/g, '').toLocaleLowerCase()
-          if (/^\d+$/.test(normalizedQuery)) {
-            const attrNumber = Number(normalizedAttr.replace(/[^\d]/g, ''))
-            return Number.isFinite(attrNumber) && attrNumber >= Number(normalizedQuery)
+          if ((condition.compare === 'gte' || condition.compare === 'lte') && /^\d+$/.test(normalizedQuery)) {
+            const firstMatch = normalizedAttr.match(/\d+/)
+            if (!firstMatch) return false
+            const attrNumber = Number(firstMatch[0])
+            const queryNumber = Number(normalizedQuery)
+            return condition.compare === 'lte' ? attrNumber <= queryNumber : attrNumber >= queryNumber
           }
           return normalizedAttr.includes(normalizedQuery)
         }
-        return attr === selected
+        return Array.isArray(attr) ? attr.includes(selected) : attr === selected
       })
     })
   })
@@ -108,9 +111,15 @@ export default function App() {
                         <div class="flex justify-between gap-3">
                           <dt class="text-slate-600 dark:text-slate-300">{condition.label}</dt>
                           <dd class="text-right font-medium">
-                            {condition.type === 'text'
-                              ? (hospital.attributes[condition.id] || '未提供')
-                              : (condition.options?.find((option) => option.value === hospital.attributes[condition.id])?.label || '未提供')}
+                            {(() => {
+                              const attr = hospital.attributes[condition.id]
+                              if (condition.type === 'text') return attr || '未提供'
+                              const values = Array.isArray(attr) ? attr : (attr ? [attr] : [])
+                              const labels = values
+                                .map((value) => condition.options?.find((option) => option.value === value)?.label)
+                                .filter(Boolean)
+                              return labels.length > 0 ? labels.join('、') : '未提供'
+                            })()}
                           </dd>
                         </div>
                       )}</For>

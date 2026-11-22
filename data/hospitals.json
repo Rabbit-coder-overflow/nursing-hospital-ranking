@@ -63,10 +63,46 @@
       "id": "salary",
       "label": "薪資",
       "type": "text",
+      "compare": "gte",
       "placeholder": "例如：45000 或 48,000"
+    },
+    {
+      "id": "academic_score",
+      "label": "學業成績",
+      "type": "text",
+      "compare": "lte",
+      "placeholder": "例如：80（輸入個人成績）"
+    },
+    {
+      "id": "internship_score",
+      "label": "實習成績",
+      "type": "text",
+      "compare": "lte",
+      "placeholder": "例如：80（輸入個人成績）"
+    },
+    {
+      "id": "other",
+      "label": "其他",
+      "type": "text",
+      "placeholder": "例如：操行成績、工讀、交班工時"
     }
   ],
   "hospitals": [
+    {
+      "name": "三軍總醫院",
+      "city": "台北市",
+      "attributes": {
+        "region": "north",
+        "hospital_type": "medical_center",
+        "special_unit": ["emergency", "icu", "operating_room"],
+        "dormitory": "needed",
+        "new_grad_grant": "needed",
+        "salary": "月薪約 75,000 元（年薪 90 萬元以上）",
+        "academic_score": "75 分（含）以上",
+        "internship_score": "75 分（含）以上",
+        "other": "操行成績 80 分以上；獎助金最高 60 萬、工讀時薪 300 元、交班納入工時、留任獎金 3 萬（詳見 docs/hospitals/三軍總醫院.md）"
+      }
+    },
     {
       "name": "範例醫院 A",
       "city": "台北市",
