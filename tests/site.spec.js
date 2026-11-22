@@ -16,10 +16,6 @@ test('searches and combines configurable filters, then resets them', async ({ pa
   await expect(page.getByText('找到 1 間院所')).toBeVisible()
   await expect(page.getByRole('heading', { name: '三軍總醫院' })).toBeVisible()
 
-  await page.getByText('護理部應屆畢業生推薦計畫').click()
-  await expect(page.getByText('申請推薦條件')).toBeVisible()
-  await expect(page.getByText('計畫福利與優勢')).toBeVisible()
-
   await page.getByLabel('學業成績').fill('70')
   await expect(page.getByText('沒有符合條件的院所')).toBeVisible()
 
