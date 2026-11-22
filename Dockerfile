@@ -12,11 +12,9 @@ COPY data ./data
 
 RUN npm run build
 
-# Runtime stage: slim Ubuntu nginx image
-FROM ubuntu/nginx:1.24-24.04_beta
+# Runtime stage: slim Ubuntu 26.04 nginx rock image
+FROM ubuntu/nginx:1.28-26.04_edge
 
 COPY --from=builder /app/dist /var/www/html
 
 EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
