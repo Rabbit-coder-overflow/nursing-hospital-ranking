@@ -1,0 +1,45 @@
+{
+  "conditions": [
+    {
+      "id": "shift",
+      "label": "輪班方式",
+      "options": [
+        { "value": "fixed", "label": "固定班" },
+        { "value": "rotating", "label": "輪班" }
+      ]
+    },
+    {
+      "id": "overtime",
+      "label": "加班情況",
+      "options": [
+        { "value": "rare", "label": "較少加班" },
+        { "value": "sometimes", "label": "偶爾加班" }
+      ]
+    },
+    {
+      "id": "leave",
+      "label": "排假彈性",
+      "options": [
+        { "value": "flexible", "label": "較有彈性" },
+        { "value": "scheduled", "label": "依排班安排" }
+      ]
+    }
+  ],
+  "hospitals": [
+    {
+      "name": "範例醫院 A",
+      "city": "台北市",
+      "attributes": { "shift": "fixed", "overtime": "rare", "leave": "flexible" }
+    },
+    {
+      "name": "範例醫院 B",
+      "city": "台中市",
+      "attributes": { "shift": "rotating", "overtime": "sometimes", "leave": "scheduled" }
+    },
+    {
+      "name": "範例醫院 C",
+      "city": "高雄市",
+      "attributes": { "shift": "rotating", "overtime": "rare", "leave": "flexible" }
+    }
+  ]
+}
