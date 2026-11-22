@@ -29,3 +29,7 @@ Follow these project-wide guidelines, based on [Andrej Karpathy's observations](
 10. **Checkpoint substantial work:** For multi-step tasks, report what is done, verified, and still outstanding after significant steps.
 11. **Match project conventions:** Follow established naming, formatting, architecture, and localization patterns.
 12. **Fail loud:** State uncertainty, failures, and unverified outcomes plainly; never imply success when work was skipped or not verified.
+
+## UI language
+
+Aside from code, code comments, and prompts, all displayed UI text (including labels, headings, messages, and user-facing data) must be written in Traditional Chinese (繁體中文).
