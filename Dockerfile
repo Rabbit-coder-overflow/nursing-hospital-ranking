@@ -12,9 +12,9 @@ COPY data ./data
 
 RUN npm run build
 
-# Runtime stage: latest official nginx slim image
-FROM nginx:alpine-slim
+# Runtime stage: latest official slim Ubuntu nginx image
+FROM ubuntu/nginx:latest
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /var/www/html
 
 EXPOSE 80
