@@ -124,23 +124,6 @@ export default function App() {
                         </div>
                       )}</For>
                     </dl>
-                    <Show when={hospital.details}>
-                      <details class="mt-4 border-t border-slate-100 pt-3 text-sm dark:border-slate-700">
-                        <summary class="cursor-pointer font-semibold text-teal-700 hover:text-teal-900 dark:text-teal-300 dark:hover:text-teal-100">
-                          {hospital.details.title || '查看詳情'}
-                        </summary>
-                        <div class="mt-3 space-y-3 text-slate-700 dark:text-slate-300">
-                          <For each={hospital.details.sections}>{(section) => (
-                            <div>
-                              <h4 class="font-semibold text-slate-900 dark:text-slate-100">{section.heading}</h4>
-                              <ul class="mt-1 list-disc space-y-1 pl-5 leading-6">
-                                <For each={section.items}>{(item) => <li>{item}</li>}</For>
-                              </ul>
-                            </div>
-                          )}</For>
-                        </div>
-                      </details>
-                    </Show>
                   </article>
                 )}</For>
               </div>
