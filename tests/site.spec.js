@@ -3,15 +3,30 @@ import { expect, test } from '@playwright/test'
 test('searches and combines configurable filters, then resets them', async ({ page }) => {
   await page.goto('./')
   await expect(page.getByRole('note')).toContainText('示範資料')
-  await expect(page.getByText('找到 3 間院所')).toBeVisible()
+  await expect(page.getByText('找到 4 間院所')).toBeVisible()
   await expect(page.getByLabel('加班情況')).toHaveCount(0)
 
   await page.getByLabel('院所縣市').selectOption('north')
-  await expect(page.getByText('找到 1 間院所')).toBeVisible()
+  await expect(page.getByText('找到 2 間院所')).toBeVisible()
+  await expect(page.getByRole('heading', { name: '三軍總醫院' })).toBeVisible()
   await expect(page.getByRole('heading', { name: '範例醫院 A' })).toBeVisible()
 
+  await page.getByLabel('學業成績').fill('80')
+  await page.getByLabel('實習成績').fill('80')
+  await expect(page.getByText('找到 1 間院所')).toBeVisible()
+  await expect(page.getByRole('heading', { name: '三軍總醫院' })).toBeVisible()
+
+  await page.getByText('護理部應屆畢業生推薦計畫').click()
+  await expect(page.getByText('申請推薦條件')).toBeVisible()
+  await expect(page.getByText('計畫福利與優勢')).toBeVisible()
+
+  await page.getByLabel('學業成績').fill('70')
+  await expect(page.getByText('沒有符合條件的院所')).toBeVisible()
+
   await page.getByRole('button', { name: '清除全部' }).click()
-  await expect(page.getByText('找到 3 間院所')).toBeVisible()
+  await expect(page.getByText('找到 4 間院所')).toBeVisible()
+  await expect(page.getByLabel('學業成績')).toHaveValue('')
+  await expect(page.getByLabel('實習成績')).toHaveValue('')
 
   await page.getByLabel('排班彈性').selectOption('fixed')
   await expect(page.getByText('找到 2 間院所')).toBeVisible()
@@ -23,13 +38,13 @@ test('searches and combines configurable filters, then resets them', async ({ pa
   await page.getByLabel('搜尋院所或縣市').fill('高雄')
   await expect(page.getByText('沒有符合條件的院所')).toBeVisible()
   await page.getByRole('button', { name: '清除全部' }).click()
-  await expect(page.getByText('找到 3 間院所')).toBeVisible()
+  await expect(page.getByText('找到 4 間院所')).toBeVisible()
   await expect(page.getByLabel('搜尋院所或縣市')).toHaveValue('')
   await expect(page.getByLabel('排班彈性')).toHaveValue('')
   await expect(page.getByLabel('宿舍')).toHaveValue('')
 
   await page.getByLabel('薪資').fill('48000')
-  await expect(page.getByText('找到 2 間院所')).toBeVisible()
+  await expect(page.getByText('找到 3 間院所')).toBeVisible()
   await expect(page.getByRole('heading', { name: '範例醫院 B' })).toHaveCount(0)
 
   await page.getByLabel('院所性質').selectOption('cancer_specialty')
