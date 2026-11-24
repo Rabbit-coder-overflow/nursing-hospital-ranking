@@ -5,6 +5,14 @@ test('searches and combines configurable filters, then resets them', async ({ pa
   await expect(page.getByRole('note')).toContainText('114 學年度（N48）畢業生就業推薦訊息')
   await expect(page.getByText('找到 11 間院所')).toBeVisible()
   await expect(page.getByLabel('加班情況')).toHaveCount(0)
+  await expect(page.getByLabel('輪班方式')).toHaveCount(0)
+  await expect(page.getByLabel('排班彈性')).toHaveCount(0)
+
+  await page.getByLabel('操行成績').fill('75')
+  await expect(page.getByText('找到 1 間院所')).toBeVisible()
+  await expect(page.getByRole('heading', { name: '新竹馬偕紀念醫院（新竹馬偕）' })).toBeVisible()
+  await page.getByRole('button', { name: '清除全部' }).click()
+  await expect(page.getByLabel('操行成績')).toHaveValue('')
 
   await page.getByLabel('院所縣市').selectOption('north')
   await expect(page.getByText('找到 7 間院所')).toBeVisible()
