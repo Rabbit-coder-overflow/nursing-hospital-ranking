@@ -62,7 +62,7 @@ export default function App() {
 
       <main class="mx-auto max-w-6xl px-5 py-8 sm:px-8">
         <div class="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-100" role="note">
-          <strong>示範資料，非真實醫院資訊。</strong> 目前所有院所與條件皆為虛構範例，不代表實際工作環境或排名；請向院方及現職護理人員確認最新資訊。
+          <strong>114 學年度（N48）畢業生就業推薦訊息（截至 115/05/11）。</strong> 114 學年度本校畢業典禮時間為 6 月 6 日；實際推薦名額、篩選標準與待遇請以各院最新來文及學校公告為準。
         </div>
 
         <div class="mt-8 grid gap-8 md:grid-cols-[260px_1fr]">
