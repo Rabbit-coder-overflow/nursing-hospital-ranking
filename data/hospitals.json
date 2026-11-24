@@ -44,22 +44,6 @@
       ]
     },
     {
-      "id": "shift",
-      "label": "輪班方式",
-      "options": [
-        { "value": "fixed", "label": "固定班" },
-        { "value": "rotating", "label": "輪班" }
-      ]
-    },
-    {
-      "id": "leave",
-      "label": "排班彈性",
-      "options": [
-        { "value": "fixed", "label": "固定班別" },
-        { "value": "sequential", "label": "依序排班" }
-      ]
-    },
-    {
       "id": "salary",
       "label": "薪資",
       "type": "text",
@@ -81,10 +65,17 @@
       "placeholder": "例如：80（輸入個人成績）"
     },
     {
+      "id": "conduct_score",
+      "label": "操行成績",
+      "type": "text",
+      "compare": "lte",
+      "placeholder": "例如：80（輸入個人成績）"
+    },
+    {
       "id": "other",
       "label": "其他",
       "type": "text",
-      "placeholder": "例如：操行成績、宿舍、簽約金"
+      "placeholder": "例如：簽約金、夜班費、報到梯次"
     }
   ],
   "hospitals": [
@@ -107,7 +98,8 @@
         "salary": "一般病房年薪 88 萬、急重症單位年薪 92 萬",
         "academic_score": "80 分（含）以上",
         "internship_score": "80 分（含）以上",
-        "other": "來文 115/01/13；送件截止 115/04/30 前；操行 80 分（含）以上；夜班費 600～1080 元/天、早鳥報到 3000～5000 元、最後一哩 3000～5000 元；分為汀州、內湖院區（詳見 docs/hospitals/三軍總醫院.md）"
+        "conduct_score": "80 分（含）以上",
+        "other": "來文 115/01/13；送件截止 115/04/30 前；夜班費 600～1080 元/天、早鳥報到 3000～5000 元、最後一哩 3000～5000 元；分為汀州、內湖院區（詳見 docs/hospitals/三軍總醫院.md）"
       }
     },
     {
@@ -119,7 +111,8 @@
         "dormitory": "needed",
         "academic_score": "70 分以上",
         "internship_score": "80 分以上",
-        "other": "來文 115/02/23；送件截止 115/03/16 前；操行甲等；具中華民國國籍；預計 115 年 3～12 月梯次報到（詳見 docs/hospitals/北榮.md）"
+        "conduct_score": "甲等",
+        "other": "來文 115/02/23；送件截止 115/03/16 前；具中華民國國籍；預計 115 年 3～12 月梯次報到（詳見 docs/hospitals/北榮.md）"
       }
     },
     {
@@ -143,7 +136,8 @@
         "dormitory": "needed",
         "academic_score": "70 分（含）以上",
         "internship_score": "75 分（含）以上",
-        "other": "來文 115/03/04；名額不限；送件截止 113/3/30（依來文表列）；操行 80 分（含）以上；含埔里、嘉義暨灣橋分院（詳見 docs/hospitals/中榮.md）"
+        "conduct_score": "80 分（含）以上",
+        "other": "來文 115/03/04；名額不限；送件截止 113/3/30（依來文表列）；含埔里、嘉義暨灣橋分院（詳見 docs/hospitals/中榮.md）"
       }
     },
     {
@@ -163,7 +157,8 @@
         "hospital_type": "medical_center",
         "academic_score": "75 分",
         "internship_score": "75 分",
-        "other": "來文 115/03/12；不限名額；送件截止 115/03/25；甄試 115/04/11、115/04/25（筆試＋面試）；操行 80 分（詳見 docs/hospitals/國泰.md）"
+        "conduct_score": "80 分",
+        "other": "來文 115/03/12；不限名額；送件截止 115/03/25；甄試 115/04/11、115/04/25（筆試＋面試）（詳見 docs/hospitals/國泰.md）"
       }
     },
     {
@@ -174,7 +169,8 @@
         "hospital_type": "medical_center",
         "salary": "月薪 43,900～51,700 元（大學；專科 40,900～48,700 元，試用期滿）",
         "academic_score": "75 分以上",
-        "other": "來文 115/03/12；送件截止 115/04/30；操行 80 分以上；簽約金 1 年 3 萬 / 3 年 18 萬、特殊單位津貼 2000～6000 元（詳見 docs/hospitals/中山附醫.md）"
+        "conduct_score": "80 分以上",
+        "other": "來文 115/03/12；送件截止 115/04/30；簽約金 1 年 3 萬 / 3 年 18 萬、特殊單位津貼 2000～6000 元（詳見 docs/hospitals/中山附醫.md）"
       }
     },
     {
@@ -194,7 +190,8 @@
         "region": "north",
         "academic_score": "70 分（含）以上（智育須全部及格）",
         "internship_score": "75 分（含）以上",
-        "other": "來文 115/03/16；推薦名額 20 名；送件截止 115/05/01；操行 75 分（含）以上；經老師推薦且報到者每位推薦獎金 2000 元（詳見 docs/hospitals/新竹馬偕.md）"
+        "conduct_score": "75 分（含）以上",
+        "other": "來文 115/03/16；推薦名額 20 名；送件截止 115/05/01；經老師推薦且報到者每位推薦獎金 2000 元（詳見 docs/hospitals/新竹馬偕.md）"
       }
     },
     {
@@ -204,7 +201,8 @@
         "region": "south",
         "hospital_type": "medical_center",
         "academic_score": "75 分",
-        "other": "來文 115/04/10；推薦資料 Email 截止 115/04/24；面試 115/04/30；操行 80 分以上；家住南部地區、具護理師證書為佳（詳見 docs/hospitals/高榮.md）"
+        "conduct_score": "80 分以上",
+        "other": "來文 115/04/10；推薦資料 Email 截止 115/04/24；面試 115/04/30；家住南部地區、具護理師證書為佳（詳見 docs/hospitals/高榮.md）"
       }
     }
   ]
