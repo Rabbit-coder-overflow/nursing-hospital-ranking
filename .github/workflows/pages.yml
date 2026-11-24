@@ -7,7 +7,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   build:
@@ -23,6 +24,64 @@ jobs:
       - run: npm ci --include=dev
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always() && github.event_name == 'pull_request'
+        with:
+          name: playwright-screenshots
+          path: playwright-screenshots
+          if-no-files-found: ignore
+      - name: Publish PR screenshot to pr-screenshots branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          if [ ! -f playwright-screenshots/home.png ]; then
+            echo "Screenshot not found, skipping publish."
+            exit 0
+          fi
+          TMP_DIR=$(mktemp -d)
+          git clone --depth 1 --branch pr-screenshots "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "$TMP_DIR" 2>/dev/null || {
+            git init "$TMP_DIR"
+            git -C "$TMP_DIR" checkout --orphan pr-screenshots
+            git -C "$TMP_DIR" remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          }
+          mkdir -p "$TMP_DIR/pr-${{ github.event.pull_request.number }}"
+          cp playwright-screenshots/home.png "$TMP_DIR/pr-${{ github.event.pull_request.number }}/home.png"
+          git -C "$TMP_DIR" config user.name "github-actions[bot]"
+          git -C "$TMP_DIR" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "$TMP_DIR" add "pr-${{ github.event.pull_request.number }}/home.png"
+          if ! git -C "$TMP_DIR" diff --cached --quiet; then
+            git -C "$TMP_DIR" commit -m "Update E2E screenshot for PR #${{ github.event.pull_request.number }}"
+            git -C "$TMP_DIR" push origin pr-screenshots
+          fi
+      - name: Post Playwright screenshot comment on PR
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const marker = '<!-- playwright-e2e-screenshot -->';
+            const imageUrl = `https://raw.githubusercontent.com/${context.repo.owner}/${context.repo.repo}/pr-screenshots/pr-${context.issue.number}/home.png?t=${context.runId}`;
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = `${marker}\n### Playwright E2E 測試截圖\n\n![Playwright E2E 截圖](${imageUrl})\n\n- [查看本次 GitHub Actions 執行紀錄與 Artifacts](${runUrl})`;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find((c) => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
       - uses: actions/upload-pages-artifact@v4
         if: github.event_name != 'pull_request'
         with:

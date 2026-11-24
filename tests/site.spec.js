@@ -5,6 +5,7 @@ test('searches and combines configurable filters, then resets them', async ({ pa
   await expect(page.getByRole('note')).toContainText('114 學年度（N48）畢業生就業推薦訊息')
   await expect(page.getByRole('note')).toContainText('115 畢業典禮時間未定')
   await expect(page.getByText('找到 11 間院所')).toBeVisible()
+  await page.screenshot({ path: 'playwright-screenshots/home.png', fullPage: true })
   await expect(page.getByLabel('加班情況')).toHaveCount(0)
   await expect(page.getByLabel('輪班方式')).toHaveCount(0)
   await expect(page.getByLabel('排班彈性')).toHaveCount(0)
