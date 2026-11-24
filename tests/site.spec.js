@@ -22,7 +22,8 @@ test('searches and combines configurable filters, then resets them', async ({ pa
   await expect(page.getByRole('heading', { name: '臺大醫院（臺大附醫）' })).toBeVisible()
 
   await page.getByLabel('宿舍').selectOption('needed')
-  await expect(page.getByText('找到 2 間院所')).toBeVisible()
+  await expect(page.getByText('找到 3 間院所')).toBeVisible()
+  await expect(page.getByRole('heading', { name: '三軍總醫院（三軍總）' })).toBeVisible()
   await expect(page.getByRole('heading', { name: '臺北榮民總醫院（北榮）' })).toBeVisible()
   await expect(page.getByRole('heading', { name: '臺大醫院（臺大附醫）' })).toBeVisible()
 
@@ -39,6 +40,13 @@ test('searches and combines configurable filters, then resets them', async ({ pa
   await expect(page.getByText('找到 2 間院所')).toBeVisible()
   await expect(page.getByRole('heading', { name: '臺中榮民總醫院（中榮，含埔里及嘉義分院）' })).toBeVisible()
   await expect(page.getByRole('heading', { name: '新竹馬偕紀念醫院（新竹馬偕）' })).toBeVisible()
+
+  await page.getByLabel('學業成績').fill('75')
+  await page.getByLabel('實習成績').fill('75')
+  await page.getByLabel('操行成績').fill('80')
+  await page.getByLabel('特殊工作單位').selectOption('icu')
+  await expect(page.getByText('找到 1 間院所')).toBeVisible()
+  await expect(page.getByRole('heading', { name: '三軍總醫院（三軍總）' })).toBeVisible()
 
   await page.getByLabel('學業成績').fill('65')
   await expect(page.getByText('沒有符合條件的院所')).toBeVisible()
@@ -57,7 +65,8 @@ test('searches and combines configurable filters, then resets them', async ({ pa
   await expect(page.getByLabel('其他')).toHaveValue('')
 
   await page.getByLabel('薪資').fill('45000')
-  await expect(page.getByText('找到 2 間院所')).toBeVisible()
+  await expect(page.getByText('找到 3 間院所')).toBeVisible()
+  await expect(page.getByRole('heading', { name: '三軍總醫院（三軍總）' })).toBeVisible()
   await expect(page.getByRole('heading', { name: '臺大醫院（臺大附醫）' })).toBeVisible()
   await expect(page.getByRole('heading', { name: '新竹臺大分院（新竹台大）' })).toBeVisible()
 
