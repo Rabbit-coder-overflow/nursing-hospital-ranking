@@ -95,11 +95,14 @@
       "attributes": {
         "region": "north",
         "hospital_type": "medical_center",
-        "salary": "一般病房年薪 88 萬、急重症單位年薪 92 萬",
-        "academic_score": "80 分（含）以上",
-        "internship_score": "80 分（含）以上",
+        "special_unit": ["emergency", "icu", "operating_room"],
+        "dormitory": "needed",
+        "new_grad_grant": "needed",
+        "salary": "月薪約 75,000 元（年薪 90 萬元以上；ER/ICU/OR 年薪 95 萬元以上；軍官班軍護年薪約 108 萬元）",
+        "academic_score": "75 分（含）以上",
+        "internship_score": "75 分（含）以上",
         "conduct_score": "80 分（含）以上",
-        "other": "來文 115/01/13；送件截止 115/04/30 前；夜班費 600～1080 元/天、早鳥報到 3000～5000 元、最後一哩 3000～5000 元；分為汀州、內湖院區（詳見 docs/hospitals/三軍總醫院.md）"
+        "other": "應屆畢業生推薦計畫：116/04/30 前校方推薦；學生獎助金 12 萬/年（最高 60 萬）、工讀時薪約 300 元、最後一哩實習、夜班費最高 1,080 元/天、新人留任獎金 3 萬、每日 30 分鐘交班計入工時、免費冷氣宿舍/健身中心/制服免費清洗（詳見 docs/hospitals/三軍總醫院.md）"
       }
     },
     {
