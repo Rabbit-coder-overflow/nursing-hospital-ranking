@@ -2,8 +2,10 @@ import { expect, test } from '@playwright/test'
 
 test('searches and combines configurable filters, then resets them', async ({ page }) => {
   await page.goto('./')
-  await expect(page.getByRole('note')).toContainText('114 學年度（N48）畢業生就業推薦訊息')
+  await expect(page.getByRole('note')).toContainText('115 學年度（N49）畢業生就業推薦訊息。')
+  await expect(page.getByRole('note')).toContainText('實際推薦名額、篩選標準與待遇請以各院最新來文及學校公告為準。')
   await expect(page.getByText('找到 11 間院所')).toBeVisible()
+  await page.screenshot({ path: 'playwright-screenshots/home.png', fullPage: true })
   await expect(page.getByLabel('加班情況')).toHaveCount(0)
   await expect(page.getByLabel('輪班方式')).toHaveCount(0)
   await expect(page.getByLabel('排班彈性')).toHaveCount(0)
