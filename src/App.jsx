@@ -62,7 +62,7 @@ export default function App() {
 
       <main class="mx-auto max-w-6xl px-5 py-8 sm:px-8">
         <div class="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-100" role="note">
-          <strong>114 學年度（N48）畢業生就業推薦訊息（截至 115/05/11）。</strong> 115 畢業典禮時間未定；實際推薦名額、篩選標準與待遇請以各院最新來文及學校公告為準。
+          <strong>115 學年度（N49）畢業生就業推薦訊息。</strong> 實際推薦名額、篩選標準與待遇請以各院最新來文及學校公告為準。
         </div>
 
         <div class="mt-8 grid gap-8 md:grid-cols-[260px_1fr]">
